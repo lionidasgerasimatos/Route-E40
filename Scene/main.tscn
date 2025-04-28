@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cximqwr8w34ax"]
+
+[ext_resource type="PackedScene" uid="uid://btfcoi2qdaix4" path="res://Scene/car.tscn" id="2_r34rm"]
+[ext_resource type="Texture2D" uid="uid://bqwm50awk8el4" path="res://icon.svg" id="2_sblpm"]
+
+[node name="MAIN" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 304.0
+offset_top = -87.0
+offset_right = 432.0
+offset_bottom = 41.0
+scale = Vector2(11.0988, 11.271)
+texture = ExtResource("2_sblpm")
+
+[node name="CAR" parent="." instance=ExtResource("2_r34rm")]
+position = Vector2(801, 471)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4xkpmdv3bk2h"]
+
+[ext_resource type="Script" uid="uid://syvy2787d1is" path="res://scripts/gun.gd" id="1_0fcgr"]
+[ext_resource type="Texture2D" uid="uid://dvuqthrejtswg" path="res://Assets/Gun.png" id="1_qaof2"]
+
+[node name="Gun" type="CharacterBody2D"]
+script = ExtResource("1_0fcgr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(17, 0)
+rotation = 1.57067
+scale = Vector2(3, 3)
+texture = ExtResource("1_qaof2")
+
+[node name="barrel" type="Node2D" parent="."]
+position = Vector2(36, 1)
+
+[node name="shooting_time" type="Timer" parent="."]
+wait_time = 0.357
+one_shot = true
+
+[connection signal="timeout" from="shooting_time" to="." method="_on_shooting_time_timeout"]

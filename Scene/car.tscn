@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://btfcoi2qdaix4"]
+
+[ext_resource type="Texture2D" uid="uid://b8ju2m18nciek" path="res://Assets/Car.png" id="1_cd047"]
+[ext_resource type="Script" uid="uid://bxgyo76tjxrpd" path="res://scripts/car.gd" id="1_d7vpe"]
+[ext_resource type="PackedScene" uid="uid://c4xkpmdv3bk2h" path="res://Scene/gun.tscn" id="3_uukhu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d7vpe"]
+size = Vector2(33, 73)
+
+[node name="CAR" type="CharacterBody2D"]
+script = ExtResource("1_d7vpe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.56303
+scale = Vector2(3, 3)
+texture = ExtResource("1_cd047")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 1)
+rotation = 1.56045
+shape = SubResource("RectangleShape2D_d7vpe")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.53, 0.53)
+
+[node name="Gun" parent="." instance=ExtResource("3_uukhu")]
+position = Vector2(-17, 0)
