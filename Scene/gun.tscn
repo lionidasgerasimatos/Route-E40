@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4xkpmdv3bk2h"]
+[gd_scene load_steps=5 format=3 uid="uid://c4xkpmdv3bk2h"]
 
 [ext_resource type="Script" uid="uid://syvy2787d1is" path="res://scripts/gun.gd" id="1_0fcgr"]
 [ext_resource type="Texture2D" uid="uid://dvuqthrejtswg" path="res://Assets/Gun.png" id="1_qaof2"]
+
+[sub_resource type="Gradient" id="Gradient_0fcgr"]
+offsets = PackedFloat32Array(0, 0.611354)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gjdbb"]
+gradient = SubResource("Gradient_0fcgr")
+fill = 1
+fill_from = Vector2(0.495413, 0.495413)
 
 [node name="Gun" type="CharacterBody2D"]
 script = ExtResource("1_0fcgr")
@@ -16,7 +25,14 @@ texture = ExtResource("1_qaof2")
 position = Vector2(36, 1)
 
 [node name="shooting_time" type="Timer" parent="."]
-wait_time = 0.357
+wait_time = 0.157
 one_shot = true
+
+[node name="barrel_light" type="PointLight2D" parent="."]
+position = Vector2(42, 1)
+scale = Vector2(1.44591, 1.46352)
+color = Color(0.896463, 0.309951, 3.40766e-05, 1)
+energy = 1.15
+texture = SubResource("GradientTexture2D_gjdbb")
 
 [connection signal="timeout" from="shooting_time" to="." method="_on_shooting_time_timeout"]

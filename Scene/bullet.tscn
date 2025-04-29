@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfwoei7n5knsd"]
+[gd_scene load_steps=4 format=3 uid="uid://dfwoei7n5knsd"]
 
 [ext_resource type="Script" uid="uid://2671s8k27mqv" path="res://scripts/bullet.gd" id="1_w63l4"]
+[ext_resource type="Texture2D" uid="uid://dumijr002k2bj" path="res://Assets/Bullet.png" id="2_k7h5k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p4ci"]
 radius = 3.0
@@ -9,9 +10,10 @@ radius = 3.0
 script = ExtResource("1_w63l4")
 BULLET_SPEED = 20
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.56712
+scale = Vector2(0.327395, 0.327395)
+texture = ExtResource("2_k7h5k")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7p4ci")
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(3.56168e-06, 0.615319, 1.73271e-06, 1)
-polygon = PackedVector2Array(0, -3, 2, -2, 3, -1, 3, 0, 2, 2, 1, 3, 0, 3, -2, 2, -3, 0, -2, -2)

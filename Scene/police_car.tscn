@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://do1e6t713qaq4"]
+
+[ext_resource type="Script" uid="uid://crpi0s5ijlm3c" path="res://scripts/police_car.gd" id="1_5twsb"]
+
+[node name="Police car" type="CharacterBody2D"]
+script = ExtResource("1_5twsb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
