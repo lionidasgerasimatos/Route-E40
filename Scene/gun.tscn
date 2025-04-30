@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4xkpmdv3bk2h"]
+[gd_scene load_steps=10 format=3 uid="uid://c4xkpmdv3bk2h"]
 
 [ext_resource type="Script" uid="uid://syvy2787d1is" path="res://scripts/gun.gd" id="1_0fcgr"]
-[ext_resource type="Texture2D" uid="uid://dvuqthrejtswg" path="res://Assets/Gun.png" id="1_qaof2"]
+[ext_resource type="Texture2D" uid="uid://dddvi248e211" path="res://Assets/Gun_spritesheet.png" id="2_0fcgr"]
 
 [sub_resource type="Gradient" id="Gradient_0fcgr"]
 offsets = PackedFloat32Array(0, 0.611354)
@@ -12,6 +12,65 @@ gradient = SubResource("Gradient_0fcgr")
 fill = 1
 fill_from = Vector2(0.495413, 0.495413)
 
+[sub_resource type="Curve" id="Curve_0fcgr"]
+_data = [Vector2(0.0247295, 1), 0.0, 0.0, 0, 0, Vector2(0.995363, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_gjdbb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ikln6"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0fcgr"]
+resource_name = "shooting"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gjdbb"]
+_data = {
+&"RESET": SubResource("Animation_gjdbb"),
+&"idle": SubResource("Animation_ikln6"),
+&"shooting": SubResource("Animation_0fcgr")
+}
+
 [node name="Gun" type="CharacterBody2D"]
 script = ExtResource("1_0fcgr")
 
@@ -19,7 +78,8 @@ script = ExtResource("1_0fcgr")
 position = Vector2(17, 0)
 rotation = 1.57067
 scale = Vector2(3, 3)
-texture = ExtResource("1_qaof2")
+texture = ExtResource("2_0fcgr")
+hframes = 2
 
 [node name="barrel" type="Node2D" parent="."]
 position = Vector2(36, 1)
@@ -34,5 +94,26 @@ scale = Vector2(1.44591, 1.46352)
 color = Color(0.896463, 0.309951, 3.40766e-05, 1)
 energy = 1.15
 texture = SubResource("GradientTexture2D_gjdbb")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(42, 1)
+scale = Vector2(1.44591, 1.46352)
+emitting = false
+amount = 15
+lifetime = 0.1
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_0fcgr")
+
+[node name="GunAnimation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+&"": SubResource("AnimationLibrary_gjdbb")
+}
 
 [connection signal="timeout" from="shooting_time" to="." method="_on_shooting_time_timeout"]

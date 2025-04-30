@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var car_an :=$CarAnimation
+
 @export var steering_angle = 20  # Maximum angle for steering the car's wheels
 @export var engine_power = 700  # How much force the engine can apply for acceleration
 @export var friction = -55  # The friction coefficient that slows down the car
@@ -29,22 +31,26 @@ func _physics_process(delta: float) -> void:
 	velocity += acceleration * delta  # Apply the resulting acceleration to the velocity
 	apply_friction(delta)  # Apply friction forces to the car
 	move_and_slide()  # Move the car and handle collisions
-	
+
 
 func get_input():
 	# Get steering input and translate it to an angle
 	var turn = Input.get_axis("left", "right")
 	steer_direction = turn * deg_to_rad(steering_angle)
-
 	# If accelerate is pressed, apply engine power to the car's forward direction
 	if Input.is_action_pressed("up"):
 		acceleration = transform.x * engine_power
-
 	# If brake is pressed, apply braking force
 	if Input.is_action_pressed("down") or  Input.is_action_pressed("handbreak"):
 		acceleration = transform.x * braking
-
-
+	
+	#Handle Animations
+	if turn > 0.1:
+		car_an.play("right")
+	elif turn < -0.1:
+		car_an.play("left")
+	else:
+		car_an.play("Idle")
 
 
 
@@ -68,22 +74,17 @@ func calculate_steering(delta):
 	front_wheel += velocity.rotated(steer_direction) * delta
 	# Calculate the new heading based on the wheels' positions
 	var new_heading = rear_wheel.direction_to(front_wheel)
-
 	# Choose the traction model based on the current speed
 	var traction = traction_slow
 	if velocity.length() > slip_speed:
 		traction = traction_fast
-
 	# Dot product represents how aligned the new heading is with the current velocity direction
 	var d = new_heading.dot(velocity.normalized())
-
 	# If not braking (d > 0), adjust the car velocity smoothly towards the new heading
 	if d > 0:
 		velocity = lerp(velocity, new_heading * velocity.length(), traction * delta)
-
 	# If braking (d < 0), reverse the direction and limit the speed
 	if d < 0:
 		velocity = -new_heading * min(velocity.length(), max_speed_reverse)
-
 	# Update the car's rotation to face in the direction of the new heading
 	rotation = new_heading.angle()

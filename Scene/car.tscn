@@ -1,11 +1,79 @@
-[gd_scene load_steps=5 format=3 uid="uid://btfcoi2qdaix4"]
+[gd_scene load_steps=10 format=3 uid="uid://btfcoi2qdaix4"]
 
-[ext_resource type="Texture2D" uid="uid://b8ju2m18nciek" path="res://Assets/Car.png" id="1_cd047"]
 [ext_resource type="Script" uid="uid://bxgyo76tjxrpd" path="res://scripts/car.gd" id="1_d7vpe"]
+[ext_resource type="Texture2D" uid="uid://icsgn5mvp65s" path="res://Assets/Car-sheet.png" id="2_uukhu"]
 [ext_resource type="PackedScene" uid="uid://c4xkpmdv3bk2h" path="res://Scene/gun.tscn" id="3_uukhu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d7vpe"]
 size = Vector2(33, 73)
+
+[sub_resource type="Animation" id="Animation_hbetw"]
+resource_name = "left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_mmd8j"]
+resource_name = "right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_ynucw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kkigb"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jlqtu"]
+_data = {
+&"Idle": SubResource("Animation_kkigb"),
+&"RESET": SubResource("Animation_ynucw"),
+&"left": SubResource("Animation_hbetw"),
+&"right": SubResource("Animation_mmd8j")
+}
 
 [node name="CAR" type="CharacterBody2D"]
 script = ExtResource("1_d7vpe")
@@ -13,7 +81,8 @@ script = ExtResource("1_d7vpe")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.56303
 scale = Vector2(3, 3)
-texture = ExtResource("1_cd047")
+texture = ExtResource("2_uukhu")
+hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 1)
@@ -22,6 +91,11 @@ shape = SubResource("RectangleShape2D_d7vpe")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.53, 0.53)
+
+[node name="CarAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_jlqtu")
+}
 
 [node name="Gun" parent="." instance=ExtResource("3_uukhu")]
 position = Vector2(-17, 0)
