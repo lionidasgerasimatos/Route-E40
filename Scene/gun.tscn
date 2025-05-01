@@ -116,4 +116,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_gjdbb")
 }
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="timeout" from="shooting_time" to="." method="_on_shooting_time_timeout"]
