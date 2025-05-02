@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfwoei7n5knsd"]
+[gd_scene load_steps=8 format=3 uid="uid://dfwoei7n5knsd"]
 
 [ext_resource type="Script" uid="uid://2671s8k27mqv" path="res://scripts/bullet.gd" id="1_w63l4"]
 [ext_resource type="Texture2D" uid="uid://dumijr002k2bj" path="res://Assets/Bullet.png" id="2_k7h5k"]
@@ -12,9 +12,45 @@ resource_name = "Deal Damage"
 [sub_resource type="Animation" id="Animation_jm66p"]
 length = 0.001
 
+[sub_resource type="Animation" id="Animation_sj187"]
+resource_name = "Hit"
+length = 0.3
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"set_process"
+}, {
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sj187"]
 _data = {
 &"Deal Damage": SubResource("Animation_k7h5k"),
+&"Hit": SubResource("Animation_sj187"),
 &"RESET": SubResource("Animation_jm66p")
 }
 
@@ -28,6 +64,7 @@ scale = Vector2(0.327395, 0.327395)
 texture = ExtResource("2_k7h5k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visibility_layer = 2
 shape = SubResource("CircleShape2D_7p4ci")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -36,3 +73,5 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

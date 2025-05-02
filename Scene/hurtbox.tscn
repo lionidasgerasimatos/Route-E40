@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmkjd425shtf5"]
+
+[ext_resource type="Script" uid="uid://bflidbsl6ko4b" path="res://scripts/hurtbox.gd" id="1_dosgy"]
+
+[node name="hurtbox" type="Area2D"]
+disable_mode = 2
+script = ExtResource("1_dosgy")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
