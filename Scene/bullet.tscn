@@ -4,13 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://dumijr002k2bj" path="res://Assets/Bullet.png" id="2_k7h5k"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p4ci"]
-radius = 3.0
+radius = 5.0
 
 [sub_resource type="Animation" id="Animation_k7h5k"]
 resource_name = "Deal Damage"
-
-[sub_resource type="Animation" id="Animation_jm66p"]
-length = 0.001
 
 [sub_resource type="Animation" id="Animation_sj187"]
 resource_name = "Hit"
@@ -47,6 +44,9 @@ tracks/1/keys = {
 }]
 }
 
+[sub_resource type="Animation" id="Animation_jm66p"]
+length = 0.001
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sj187"]
 _data = {
 &"Deal Damage": SubResource("Animation_k7h5k"),
@@ -60,7 +60,7 @@ BULLET_SPEED = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.56712
-scale = Vector2(0.327395, 0.327395)
+scale = Vector2(0.467, 0.467)
 texture = ExtResource("2_k7h5k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -74,6 +74,7 @@ _data = {
 
 [node name="CAR" type="CharacterBody2D"]
 script = ExtResource("1_d7vpe")
+engine_power = 550
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.57002
@@ -82,7 +83,7 @@ texture = ExtResource("2_uukhu")
 hframes = 3
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.53, 0.53)
+zoom = Vector2(0.3, 0.3)
 
 [node name="CarAnimation" type="AnimationPlayer" parent="."]
 libraries = {
