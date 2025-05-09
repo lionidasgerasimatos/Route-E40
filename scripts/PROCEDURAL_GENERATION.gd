@@ -10,11 +10,17 @@ const W = 8
 var cell_walls := {Vector2i(0,-1):N, Vector2i(1,0):E, Vector2i(0,1):S,Vector2i(-1,0):W }
 
 #How many tiles big we want it
-@export var width = 30
-@export var height = 25
+@export var width = 60
+@export var height = 50
+
 #How many pixels is the tilemap see from settings
 @export var tile_size = 64 
 var source_id : int 
+
+# Removal Dencity
+@export var erase_fraction = 0.5                  
+@export var map_seed = 0 # 0 Doesnt have a seed map
+
 #Preloads
 @onready var Map = $TileMap
 
@@ -50,43 +56,35 @@ func set_walls(cell:Vector2i, mask:int) -> void:
 #----------------------------------------------------------------------------------------------------
 
 
-# Begining of Action
+# Begining 
 func _ready() -> void:
-	randomize()
+	$Camera2D.position=Map.map_to_local(Vector2(width/2, height/2))
+	
+	var rng:= RandomNumberGenerator.new()
+	if map_seed == 0 :
+		map_seed = randi()
+	rng.seed = map_seed
+	seed(map_seed)
+	print("This maps seed is:",map_seed)
+	
 	# Pick the *first* source in the TileSet (usually id 0)
 	source_id = Map.tile_set.get_source_id(0)
-
-	# DEBUG: draw one tile so you can verify slicing visually
-	# Comment this line once you see the tile appear at (0,0).
-	set_walls(Vector2i.ZERO, 15)
-
 	# Generate the full maze
 	make_maze()
-
-# THIS IS A HELPER Function we want it just to check the arround the cell and see whats there in a list
-#func check_neighbors(cell:Vector2i, unvisited:Array[Vector2i]) -> Array[Vector2i] :
-	#Returns an array of cell's UNVISITED neighbors
-	#var list : Array[Vector2i] = []      
-	#for n in cell_walls.keys():              #n is a direction offset 
-		#var neighbor :Vector2i = cell + n    #compute the neighbor;s cell coordinates
-		#if neighbor in unvisited :          
-			#list.append(neighbor)       #we add the neighbor to the list as an element
-			
-	#return list
+	erase_walls()
 
 
-func make_maze() ->void :
+func make_maze() -> void :
 	var unvisited: Array[Vector2i] = [] #array of unvisited tiles
 	# GDscript doesnt have a stack data type we will represent that with an array to do the LIFO effect
 	var stack: Array[Vector2i] = []
 	
-	# Fill the map with solid tiles
 	Map.clear()
+	# Fill the map with solid tiles
 	for x in range(width):
 		for y in range(height):
 			var cell := Vector2i(x,y)
 			unvisited.append(cell)
-			
 			set_walls(cell,15)  # Every cell starts with mask 15 all four walls
 	
 	# We pick the 0,0 coordinates and remove it from the unvisited list  
@@ -112,7 +110,7 @@ func make_maze() ->void :
 			var direction_moved = next - current
 			# We find the Wall that touches between the Two Cells Because we want to make it a CONNECTION
 			var current_mask = get_walls(current) - cell_walls[direction_moved] # Basically we subract the binary number of the 
-			#cell minus the direction to get the wall remember the N S E W at the top
+			#cell minus the direction to get the wall 
 			var next_mask = get_walls(next) - cell_walls[-direction_moved] # The opposite here
 			
 			"""
@@ -140,7 +138,23 @@ func make_maze() ->void :
 			# BACKTRACK AT DEAD END 
 			# WE USE LIFO HERE TO FIND THE LAST INTERSECTION 
 			current = stack.pop_back()
-		await get_tree().process_frame
 		
 		
 		
+		
+
+func erase_walls() -> void:
+		
+		for i in range(int(width*height*erase_fraction)):
+			var x = randi_range(1, width-1)
+			var y = randi_range(1, height-1)
+			var cell = Vector2i(x,y)
+			
+			var neighbor = cell_walls.keys()[randi() % cell_walls.size()]
+			if get_walls(cell) & cell_walls[neighbor]:
+				var walls = get_walls(cell) - cell_walls[neighbor]
+				var n_walls =get_walls(cell+neighbor) - cell_walls[-neighbor]
+				set_walls(cell,walls)
+				set_walls(cell+neighbor, n_walls)
+				
+			await get_tree().process_frame
