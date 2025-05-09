@@ -7,4 +7,5 @@ export_presets.cfg
 .mono/
 *.import
 *.tmp
+*.sln
 

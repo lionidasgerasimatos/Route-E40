@@ -1,2 +1,6 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+# Set the default behavior, in case users don't have core.autocrlf set.
+# All text files will have LF line endings in the repository and CRLF on checkout.
+# This is the recommended setting for Windows users.
+
