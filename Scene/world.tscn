@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://7oqxvmdimqpl"]
+[gd_scene load_steps=22 format=3 uid="uid://7oqxvmdimqpl"]
 
 [ext_resource type="Script" uid="uid://bwy43an0027nr" path="res://scripts/PROCEDURAL_GENERATION.gd" id="1_dlwip"]
 [ext_resource type="Texture2D" uid="uid://bc7v0xouj7jyo" path="res://Assets/TEST_ATLAS_TWO-export.png" id="2_dlwip"]
 [ext_resource type="PackedScene" uid="uid://btfcoi2qdaix4" path="res://Scene/car.tscn" id="3_ejll3"]
+[ext_resource type="PackedScene" uid="uid://do1e6t713qaq4" path="res://Scene/police_car.tscn" id="4_scul4"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ejll3"]
 vertices = PackedVector2Array(-9.0625, 7.71094, -32, 8.09375, -32, -8.09375, -7.51563, -9.25, 7.51563, 8.09375, 7.90625, 32, -8.67188, 32, 32, -7.32813, 32, 8.48438, 7.90625, -7.71094, 7.51563, -32, -7.13281, -32)
@@ -141,9 +142,13 @@ height = 15
 erase_fraction = 0.8
 
 [node name="TileMap" type="TileMap" parent="."]
-scale = Vector2(20, 20)
 tile_set = SubResource("TileSet_scul4")
 format = 2
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(761, 508)
+zoom = Vector2(0.3, 0.3)
+
 [node name="CAR" parent="." instance=ExtResource("3_ejll3")]
-position = Vector2(531, 573)
+
+[node name="Police car" parent="." instance=ExtResource("4_scul4")]
