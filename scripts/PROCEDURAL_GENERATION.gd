@@ -10,12 +10,13 @@ const W = 8
 var cell_walls := {Vector2i(0,-1):N, Vector2i(1,0):E, Vector2i(0,1):S,Vector2i(-1,0):W }
 
 #How many tiles big we want it
-@export var width = 60
-@export var height = 50
+@export var width = 30
+@export var height = 30
 
 #How many pixels is the tilemap see from settings
 @export var tile_size = 64 
 var source_id : int 
+
 
 # Removal Dencity
 @export var erase_fraction = 0.5                  
@@ -58,7 +59,7 @@ func set_walls(cell:Vector2i, mask:int) -> void:
 
 # Begining 
 func _ready() -> void:
-	$Camera2D.position=Map.map_to_local(Vector2(width/2, height/2))
+	#$Camera2D.position=Map.map_to_local(Vector2(width/2, height/2))
 	
 	var rng:= RandomNumberGenerator.new()
 	if map_seed == 0 :
@@ -67,11 +68,15 @@ func _ready() -> void:
 	seed(map_seed)
 	print("This maps seed is:",map_seed)
 	
+	# Select Border Tile
+	
+	
 	# Pick the *first* source in the TileSet (usually id 0)
 	source_id = Map.tile_set.get_source_id(0)
 	# Generate the full maze
 	make_maze()
 	erase_walls()
+	
 
 
 func make_maze() -> void :
@@ -146,8 +151,8 @@ func make_maze() -> void :
 func erase_walls() -> void:
 		
 		for i in range(int(width*height*erase_fraction)):
-			var x = randi_range(1, width-1)
-			var y = randi_range(1, height-1)
+			var x = randi_range(1, width-2)
+			var y = randi_range(1, height-2)
 			var cell = Vector2i(x,y)
 			
 			var neighbor = cell_walls.keys()[randi() % cell_walls.size()]
@@ -157,4 +162,7 @@ func erase_walls() -> void:
 				set_walls(cell,walls)
 				set_walls(cell+neighbor, n_walls)
 				
-			await get_tree().process_frame
+			
+
+
+		

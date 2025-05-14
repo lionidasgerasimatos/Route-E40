@@ -73,6 +73,7 @@ _data = {
 }
 
 [node name="CAR" type="CharacterBody2D"]
+collision_layer = 4
 script = ExtResource("1_d7vpe")
 engine_power = 550
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://btfcoi2qdaix4" path="res://Scene/car.tscn" id="2_r34rm"]
 [ext_resource type="Texture2D" uid="uid://bqwm50awk8el4" path="res://icon.svg" id="2_sblpm"]
-[ext_resource type="PackedScene" uid="uid://qcucmsij08w2" path="res://Scene/alien_one.tscn" id="3_r34rm"]
+[ext_resource type="PackedScene" uid="uid://qcucmsij08w2" path="res://Scene/PoliceCar.tscn" id="3_r34rm"]
 
 [node name="LEVEL" type="Node2D"]
 

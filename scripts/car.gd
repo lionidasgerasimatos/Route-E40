@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @onready var car_an :=$CarAnimation
 
-@export var steering_angle = 20  # Maximum angle for steering the car's wheels
+@export var steering_angle = 40  # Maximum angle for steering the car's wheels
 @export var engine_power = 700  # How much force the engine can apply for acceleration
 @export var friction = -55  # The friction coefficient that slows down the car
 @export var drag = -0.06  # Air drag coefficient that also slows down the car
@@ -44,7 +44,7 @@ func get_input():
 	if Input.is_action_pressed("down") or  Input.is_action_pressed("handbreak"):
 		acceleration = transform.x * braking
 	
-	#Handle Animations
+	# Handle Animations
 	if turn > 0.1:
 		car_an.play("right")
 	elif turn < -0.1:
