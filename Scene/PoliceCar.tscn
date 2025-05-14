@@ -1,0 +1,128 @@
+[gd_scene load_steps=10 format=3 uid="uid://qcucmsij08w2"]
+
+[ext_resource type="Script" uid="uid://dh6pe8l7565wp" path="res://scripts/policecar.gd" id="1_vuwf6"]
+[ext_resource type="Texture2D" uid="uid://crt4lay7oip05" path="res://Assets/policeOne.png" id="2_hgo5s"]
+[ext_resource type="Texture2D" uid="uid://dlbwo5s02wvbr" path="res://Assets/ConeLightCropp.PNG" id="3_vuwf6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgo5s"]
+size = Vector2(29.7407, 25.9716)
+
+[sub_resource type="Animation" id="Animation_hgo5s"]
+resource_name = "Idle"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vuwf6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_q56ot"]
+resource_name = "left"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_sm0xt"]
+resource_name = "right"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rodrp"]
+_data = {
+&"Idle": SubResource("Animation_hgo5s"),
+&"RESET": SubResource("Animation_vuwf6"),
+&"left": SubResource("Animation_q56ot"),
+&"right": SubResource("Animation_sm0xt")
+}
+
+[node name="Police Car" type="CharacterBody2D"]
+script = ExtResource("1_vuwf6")
+desired_distance = 100.0
+steering_angle = 20
+engine_power = 600
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("2_hgo5s")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+scale = Vector2(3.12703, -2.1177)
+shape = SubResource("RectangleShape2D_hgo5s")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rodrp")
+}
+
+[node name="Headlight" type="PointLight2D" parent="."]
+position = Vector2(114, -12)
+rotation = -1.55334
+scale = Vector2(0.170324, 0.279164)
+texture = ExtResource("3_vuwf6")
+
+[node name="Headlight2" type="PointLight2D" parent="."]
+position = Vector2(114, 13)
+rotation = -1.5708
+scale = Vector2(0.170324, 0.279164)
+texture = ExtResource("3_vuwf6")
+
+[node name="RayFrontLeft" type="RayCast2D" parent="."]
+position = Vector2(40, -12)
+target_position = Vector2(195, -119)
+
+[node name="RayFrontMid" type="RayCast2D" parent="."]
+position = Vector2(40, 3)
+target_position = Vector2(318, -1)
+
+[node name="RayFrontRight" type="RayCast2D" parent="."]
+position = Vector2(37, 17)
+target_position = Vector2(210, 104)
