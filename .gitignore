@@ -8,4 +8,5 @@ export_presets.cfg
 *.import
 *.tmp
 *.sln
+*route-e40.code-workspace
 

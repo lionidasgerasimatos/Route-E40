@@ -81,7 +81,7 @@ func _ready() -> void:
 
 func make_maze() -> void :
 	var unvisited: Array[Vector2i] = [] #array of unvisited tiles
-	# GDscript doesnt have a stack data type we will represent that with an array to do the LIFO effect
+	# GDscript doesn't have a stack data type we will represent that with an array to do the LIFO effect
 	var stack: Array[Vector2i] = []
 	
 	Map.clear()
@@ -114,7 +114,7 @@ func make_maze() -> void :
 			#REMOVE WALLS FROM BOTH CELLS
 			var direction_moved = next - current
 			# We find the Wall that touches between the Two Cells Because we want to make it a CONNECTION
-			var current_mask = get_walls(current) - cell_walls[direction_moved] # Basically we subract the binary number of the 
+			var current_mask = get_walls(current) - cell_walls[direction_moved] # Basically we subtract the binary number of the 
 			#cell minus the direction to get the wall 
 			var next_mask = get_walls(next) - cell_walls[-direction_moved] # The opposite here
 			
