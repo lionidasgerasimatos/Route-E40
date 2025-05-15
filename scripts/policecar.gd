@@ -165,3 +165,4 @@ func calculate_steering(delta: float) -> void:
 		velocity = -new_heading * min(velocity.length(), max_speed_reverse)
 
 	rotation = new_heading.angle()
+

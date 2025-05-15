@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://qcucmsij08w2"]
+[gd_scene load_steps=13 format=3 uid="uid://qcucmsij08w2"]
 
 [ext_resource type="Script" uid="uid://dh6pe8l7565wp" path="res://scripts/policecar.gd" id="1_vuwf6"]
 [ext_resource type="Texture2D" uid="uid://crt4lay7oip05" path="res://Assets/policeOne.png" id="2_hgo5s"]
 [ext_resource type="Texture2D" uid="uid://dlbwo5s02wvbr" path="res://Assets/ConeLightCropp.PNG" id="3_vuwf6"]
+[ext_resource type="PackedScene" uid="uid://bby5wc0pqp8c2" path="res://Scene/health_componet.tscn" id="4_8u20h"]
+[ext_resource type="PackedScene" uid="uid://chjgs0800dvnj" path="res://Scene/hitbox_component.tscn" id="5_bt22o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgo5s"]
 size = Vector2(29.7407, 25.9716)
@@ -81,6 +83,9 @@ _data = {
 &"right": SubResource("Animation_sm0xt")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8u20h"]
+size = Vector2(93, 50)
+
 [node name="Police Car" type="CharacterBody2D"]
 script = ExtResource("1_vuwf6")
 desired_distance = 100.0
@@ -126,3 +131,12 @@ target_position = Vector2(318, -1)
 [node name="RayFrontRight" type="RayCast2D" parent="."]
 position = Vector2(37, 17)
 target_position = Vector2(210, 104)
+
+[node name="HealthComponet" parent="." instance=ExtResource("4_8u20h")]
+
+[node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_bt22o")]
+health_component = NodePath("../HealthComponet")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_8u20h")
