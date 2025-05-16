@@ -135,6 +135,8 @@ target_position = Vector2(210, 104)
 [node name="HealthComponet" parent="." instance=ExtResource("4_8u20h")]
 
 [node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_bt22o")]
+collision_layer = 5
+collision_mask = 5
 health_component = NodePath("../HealthComponet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
