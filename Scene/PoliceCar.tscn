@@ -84,7 +84,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8u20h"]
-size = Vector2(93, 50)
+size = Vector2(94, 54)
 
 [node name="Police Car" type="CharacterBody2D"]
 script = ExtResource("1_vuwf6")
@@ -140,5 +140,5 @@ collision_mask = 5
 health_component = NodePath("../HealthComponet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
-position = Vector2(-0.5, 0)
+position = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_8u20h")
