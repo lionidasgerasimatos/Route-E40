@@ -25,6 +25,8 @@ var source_id : int
 #Preloads
 @onready var Map = $TileMap
 
+# Signals
+signal generation_finished
 
 #---------------------------------------------------------------------------------------------
 """The Next four interconnected functions are there because of a spesific Reason
@@ -76,6 +78,7 @@ func _ready() -> void:
 	# Generate the full maze
 	make_maze()
 	erase_walls()
+	generation_finished.emit() 
 	
 
 
