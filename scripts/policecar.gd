@@ -13,7 +13,7 @@ extends CharacterBody2D
 @export var traction_fast     = 4.5
 @export var traction_slow     = 10
 @export var wheel_base        = 100
-
+@export var attack_damage	 := 102.0
 # Avoidance
 @export var avoid_strength   : float = 1.2   # 1 = full steering lock
 # “Stuck / reverse” behaviour
@@ -166,3 +166,8 @@ func calculate_steering(delta: float) -> void:
 
 	rotation = new_heading.angle()
 
+func _on_area_entered(area:Area2D):
+	if area.has_method("damage"):
+		var attack = Attack.new()
+		attack.attack_damage = 102.0
+		area.damage(attack)

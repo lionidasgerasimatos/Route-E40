@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_area_entered(area:Area2D):
-	if area.has_method("damage"):
+	if area.has_method("damage") :
 		var attack = Attack.new()
 		attack.attack_damage = 50
 		area.damage(attack)
