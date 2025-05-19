@@ -9,4 +9,6 @@ export_presets.cfg
 *.tmp
 *.sln
 *route-e40.code-workspace
-
+*scripts/
+enemyTest.gd
+*enemyTest.gd
