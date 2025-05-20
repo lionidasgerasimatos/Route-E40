@@ -13,6 +13,4 @@ func _ready() -> void:
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
-	
-	if health <= 0:
-		queue_free()	
+

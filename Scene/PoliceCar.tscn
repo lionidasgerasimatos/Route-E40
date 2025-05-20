@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://qcucmsij08w2"]
+[gd_scene load_steps=15 format=3 uid="uid://qcucmsij08w2"]
 
 [ext_resource type="Script" uid="uid://dh6pe8l7565wp" path="res://scripts/policecar.gd" id="1_vuwf6"]
 [ext_resource type="Texture2D" uid="uid://crt4lay7oip05" path="res://Assets/policeOne.png" id="2_hgo5s"]
 [ext_resource type="Texture2D" uid="uid://dlbwo5s02wvbr" path="res://Assets/ConeLightCropp.PNG" id="3_vuwf6"]
 [ext_resource type="PackedScene" uid="uid://bby5wc0pqp8c2" path="res://Scene/health_componet.tscn" id="4_8u20h"]
 [ext_resource type="PackedScene" uid="uid://chjgs0800dvnj" path="res://Scene/hitbox_component.tscn" id="5_bt22o"]
+[ext_resource type="PackedScene" uid="uid://6qf3oufpmrkr" path="res://Scene/hurtbox_component.tscn" id="6_bt22o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgo5s"]
-size = Vector2(29.7407, 25.9716)
+size = Vector2(28.1417, 25.9716)
 
 [sub_resource type="Animation" id="Animation_hgo5s"]
 resource_name = "Idle"
@@ -84,7 +85,11 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8u20h"]
-size = Vector2(94, 54)
+size = Vector2(88, 54)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_bt22o"]
+a = Vector2(0, -29)
+b = Vector2(0, 29)
 
 [node name="Police Car" type="CharacterBody2D"]
 collision_layer = 3
@@ -101,7 +106,7 @@ texture = ExtResource("2_hgo5s")
 hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, -0.5)
+position = Vector2(-2, -0.5)
 scale = Vector2(3.12703, -2.1177)
 shape = SubResource("RectangleShape2D_hgo5s")
 
@@ -142,5 +147,11 @@ collision_mask = 5
 health_component = NodePath("../HealthComponet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
-position = Vector2(1, -1)
+position = Vector2(-2, -1)
 shape = SubResource("RectangleShape2D_8u20h")
+
+[node name="hurtbox_component" parent="." instance=ExtResource("6_bt22o")]
+position = Vector2(45, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox_component"]
+shape = SubResource("SegmentShape2D_bt22o")
