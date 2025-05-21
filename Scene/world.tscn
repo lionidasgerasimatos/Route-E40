@@ -1,12 +1,10 @@
-[gd_scene load_steps=27 format=4 uid="uid://7oqxvmdimqpl"]
+[gd_scene load_steps=25 format=4 uid="uid://7oqxvmdimqpl"]
 
 [ext_resource type="Script" uid="uid://bwy43an0027nr" path="res://scripts/PROCEDURAL_GENERATION.gd" id="1_dlwip"]
 [ext_resource type="Texture2D" uid="uid://bc7v0xouj7jyo" path="res://Assets/TEST_ATLAS_TWO-export.png" id="2_dlwip"]
 [ext_resource type="PackedScene" uid="uid://btfcoi2qdaix4" path="res://Scene/car.tscn" id="3_ejll3"]
-[ext_resource type="Script" uid="uid://cp83iavv3rg7s" path="res://scripts/tilemap_handle.gd" id="3_ol2hl"]
 [ext_resource type="Texture2D" uid="uid://ducd3d73pfa35" path="res://Assets/RED.png" id="3_pcvp0"]
 [ext_resource type="PackedScene" uid="uid://qcucmsij08w2" path="res://Scene/PoliceCar.tscn" id="4_scul4"]
-[ext_resource type="Script" uid="uid://bipbvboedn3jg" path="res://scripts/EnemySpawner.gd" id="5_37axr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o8j5v"]
 vertices = PackedVector2Array(-1.92969, 19.0859, -28.1484, 19.8594, -25.8281, 7.51563, -1.92969, 9.0625, -25.8281, -7.90625, -25.0625, -21.3984, -0.773438, -22.1719, -0.773438, -7.51563, 32, 8.09375, 24.2969, -8.16406, 32, -8.09375)
@@ -207,7 +205,6 @@ erase_fraction = 0.8
 scale = Vector2(20, 20)
 tile_set = SubResource("TileSet_scul4")
 format = 2
-script = ExtResource("3_ol2hl")
 
 [node name="BorderMap" type="TileMapLayer" parent="TileMap"]
 z_index = 10
@@ -215,9 +212,9 @@ tile_map_data = PackedByteArray("AAD///H/AAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAA
 tile_set = SubResource("TileSet_ol2hl")
 
 [node name="CAR" parent="." instance=ExtResource("3_ejll3")]
+unique_name_in_owner = true
 position = Vector2(1194, 669)
 
 [node name="enemy handleler" type="Node2D" parent="."]
-script = ExtResource("5_37axr")
 
 [node name="Police Car" parent="enemy handleler" instance=ExtResource("4_scul4")]
