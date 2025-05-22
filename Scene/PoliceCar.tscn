@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dh6pe8l7565wp" path="res://scripts/policecar.gd" id="1_vuwf6"]
 [ext_resource type="Texture2D" uid="uid://crt4lay7oip05" path="res://Assets/policeOne.png" id="2_hgo5s"]
-[ext_resource type="Texture2D" uid="uid://dlbwo5s02wvbr" path="res://Assets/ConeLightCropp.PNG" id="3_vuwf6"]
 [ext_resource type="PackedScene" uid="uid://bby5wc0pqp8c2" path="res://Scene/health_componet.tscn" id="4_8u20h"]
 [ext_resource type="PackedScene" uid="uid://chjgs0800dvnj" path="res://Scene/hitbox_component.tscn" id="5_bt22o"]
 [ext_resource type="PackedScene" uid="uid://6qf3oufpmrkr" path="res://Scene/hurtbox_component.tscn" id="6_bt22o"]
+[ext_resource type="Texture2D" uid="uid://vedqeqvorgg6" path="res://Assets/HeadlightTest.png" id="6_i82ku"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgo5s"]
 size = Vector2(28.1417, 25.9716)
@@ -115,18 +115,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_rodrp")
 }
 
-[node name="Headlight" type="PointLight2D" parent="."]
-position = Vector2(114, -12)
-rotation = -1.55334
-scale = Vector2(0.170324, 0.279164)
-texture = ExtResource("3_vuwf6")
-
-[node name="Headlight2" type="PointLight2D" parent="."]
-position = Vector2(114, 13)
-rotation = -1.5708
-scale = Vector2(0.170324, 0.279164)
-texture = ExtResource("3_vuwf6")
-
 [node name="RayFrontLeft" type="RayCast2D" parent="."]
 position = Vector2(40, -12)
 target_position = Vector2(195, -119)
@@ -155,3 +143,19 @@ position = Vector2(45, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox_component"]
 shape = SubResource("SegmentShape2D_bt22o")
+
+[node name="Headlight" type="PointLight2D" parent="."]
+position = Vector2(34, -13)
+rotation = -1.57077
+scale = Vector2(0.150534, 0.235329)
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("6_i82ku")
+
+[node name="Headlight2" type="PointLight2D" parent="."]
+position = Vector2(34, 11)
+rotation = -1.52485
+scale = Vector2(0.150534, 0.235329)
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("6_i82ku")

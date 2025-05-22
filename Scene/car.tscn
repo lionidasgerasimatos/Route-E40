@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://btfcoi2qdaix4"]
+[gd_scene load_steps=12 format=3 uid="uid://btfcoi2qdaix4"]
 
 [ext_resource type="Script" uid="uid://bxgyo76tjxrpd" path="res://scripts/car.gd" id="1_d7vpe"]
 [ext_resource type="Texture2D" uid="uid://icsgn5mvp65s" path="res://Assets/Car-sheet.png" id="2_uukhu"]
 [ext_resource type="PackedScene" uid="uid://c4xkpmdv3bk2h" path="res://Scene/gun.tscn" id="3_uukhu"]
 [ext_resource type="PackedScene" uid="uid://bby5wc0pqp8c2" path="res://Scene/health_componet.tscn" id="4_hbetw"]
 [ext_resource type="PackedScene" uid="uid://chjgs0800dvnj" path="res://Scene/hitbox_component.tscn" id="5_mmd8j"]
+[ext_resource type="Texture2D" uid="uid://vedqeqvorgg6" path="res://Assets/HeadlightTest.png" id="6_mmd8j"]
 
 [sub_resource type="Animation" id="Animation_kkigb"]
 resource_name = "Idle"
@@ -100,11 +101,14 @@ position = Vector2(-17, 0)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PackedVector2Array(-33, -15, -12, -15, -12, -12, 6, -12, 6, -15, 24, -15, 24, -12, 27, -12, 27, -9, 30, -9, 30, -6, 33, -6, 33, 9, 30, 9, 30, 12, 27, 12, 27, 15, 24, 15, 24, 18, 6, 18, 6, 15, -15, 15, -15, 18, -33, 18, -33, 15, -36, 15, -36, 12, -39, 12, -39, 6, -42, 6, -42, -3, -39, -3, -39, -9, -36, -9, -36, -12, -33, -12)
 
 [node name="HealthComponet" parent="." instance=ExtResource("4_hbetw")]
+visible = false
 
 [node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_mmd8j")]
+visible = false
 collision_layer = 5
 health_component = NodePath("../HealthComponet")
 
@@ -113,3 +117,19 @@ light_mask = 4
 visibility_layer = 4
 scale = Vector2(1.06981, 1.11761)
 polygon = PackedVector2Array(-33, -15, -12, -15, -12, -12, 6, -12, 6, -15, 24, -15, 24, -12, 27, -12, 27, -9, 30, -9, 30, -6, 33, -6, 33, 9, 30, 9, 30, 12, 27, 12, 27, 15, 24, 15, 24, 18, 6, 18, 6, 15, -15, 15, -15, 18, -33, 18, -33, 15, -36, 15, -36, 12, -39, 12, -39, 6, -42, 6, -42, -3, -39, -3, -39, -9, -36, -9, -36, -12, -33, -12)
+
+[node name="Headlight" type="PointLight2D" parent="."]
+position = Vector2(21, -3)
+rotation = -1.61759
+scale = Vector2(0.150534, 0.235329)
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("6_mmd8j")
+
+[node name="Headlight2" type="PointLight2D" parent="."]
+position = Vector2(22, 7)
+rotation = -1.46095
+scale = Vector2(0.150534, 0.235329)
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("6_mmd8j")
