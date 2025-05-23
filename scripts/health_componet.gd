@@ -4,7 +4,7 @@ class_name  HealthComponent
 
 @export var Max_Health:= 100
 var health : float
-
+signal health_changed
 
 
 func _ready() -> void:
@@ -13,4 +13,4 @@ func _ready() -> void:
 
 func damage(attack: Attack):
 	health -= attack.attack_damage
-
+	health_changed.emit()
