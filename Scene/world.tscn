@@ -1,10 +1,12 @@
-[gd_scene load_steps=45 format=4 uid="uid://7oqxvmdimqpl"]
+[gd_scene load_steps=47 format=4 uid="uid://7oqxvmdimqpl"]
 
 [ext_resource type="Script" uid="uid://bwy43an0027nr" path="res://scripts/PROCEDURAL_GENERATION.gd" id="1_dlwip"]
 [ext_resource type="Texture2D" uid="uid://bc7v0xouj7jyo" path="res://Assets/TEST_ATLAS_TWO-export.png" id="2_dlwip"]
 [ext_resource type="PackedScene" uid="uid://btfcoi2qdaix4" path="res://Scene/car.tscn" id="3_ejll3"]
 [ext_resource type="Texture2D" uid="uid://ducd3d73pfa35" path="res://Assets/RED.png" id="3_pcvp0"]
 [ext_resource type="PackedScene" uid="uid://qcucmsij08w2" path="res://Scene/PoliceCar.tscn" id="4_scul4"]
+[ext_resource type="Script" uid="uid://bishmabp2hajw" path="res://scripts/DayNightCycle.gd" id="6_ol2hl"]
+[ext_resource type="Texture2D" uid="uid://f0a1o2t2pqx3" path="res://Assets/daynightcycle-gradient-texture.tres" id="7_ddf65"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o8j5v"]
 vertices = PackedVector2Array(-1.92969, 19.0859, -28.1484, 19.8594, -25.8281, 7.51563, -1.92969, 9.0625, -25.8281, -7.90625, -25.0625, -21.3984, -0.773438, -22.1719, -0.773438, -7.51563, 32, 8.09375, 24.2969, -8.16406, 32, -8.09375)
@@ -297,3 +299,6 @@ wait_time = 4.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.2442, 0.231, 0.33, 1)
+script = ExtResource("6_ol2hl")
+gradient_texture = ExtResource("7_ddf65")
+INITIAL_HOUR = 1
