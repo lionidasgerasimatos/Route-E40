@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://btfcoi2qdaix4"]
+[gd_scene load_steps=16 format=3 uid="uid://btfcoi2qdaix4"]
 
 [ext_resource type="Script" uid="uid://bxgyo76tjxrpd" path="res://scripts/car.gd" id="1_d7vpe"]
-[ext_resource type="Texture2D" uid="uid://icsgn5mvp65s" path="res://Assets/Car-sheet.png" id="2_uukhu"]
+[ext_resource type="Texture2D" uid="uid://tvhbv2l5tcj4" path="res://Assets/CARMAYBE.png" id="2_ynucw"]
 [ext_resource type="PackedScene" uid="uid://c4xkpmdv3bk2h" path="res://Scene/gun.tscn" id="3_uukhu"]
 [ext_resource type="PackedScene" uid="uid://bby5wc0pqp8c2" path="res://Scene/health_componet.tscn" id="4_hbetw"]
+[ext_resource type="AudioStream" uid="uid://du6as2f6sa5vl" path="res://Assets/music/DENMPORWALLOacceleration.wav" id="4_ynucw"]
 [ext_resource type="PackedScene" uid="uid://chjgs0800dvnj" path="res://Scene/hitbox_component.tscn" id="5_mmd8j"]
 [ext_resource type="Texture2D" uid="uid://vedqeqvorgg6" path="res://Assets/HeadlightTest.png" id="6_mmd8j"]
+[ext_resource type="AudioStream" uid="uid://di5xp1nts6x6u" path="res://Assets/music/ShortCrash.wav" id="8_jlqtu"]
 
 [sub_resource type="Animation" id="Animation_kkigb"]
 resource_name = "Idle"
@@ -75,51 +77,51 @@ _data = {
 &"right": SubResource("Animation_mmd8j")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ynucw"]
+size = Vector2(124, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jlqtu"]
+size = Vector2(128, 56)
+
 [node name="CAR" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 12
 script = ExtResource("1_d7vpe")
+steering_angle = 30
 engine_power = 550
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = 1.57002
-scale = Vector2(3, 3)
-texture = ExtResource("2_uukhu")
-hframes = 3
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.3, 0.3)
+scale = Vector2(2, 2)
+texture = ExtResource("2_ynucw")
 
 [node name="CarAnimation" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_jlqtu")
 }
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ynucw")
+
 [node name="Gun" parent="." instance=ExtResource("3_uukhu")]
-position = Vector2(-17, 0)
+position = Vector2(-21, -1)
+rotation = -0.206622
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PackedVector2Array(-33, -15, -12, -15, -12, -12, 6, -12, 6, -15, 24, -15, 24, -12, 27, -12, 27, -9, 30, -9, 30, -6, 33, -6, 33, 9, 30, 9, 30, 12, 27, 12, 27, 15, 24, 15, 24, 18, 6, 18, 6, 15, -15, 15, -15, 18, -33, 18, -33, 15, -36, 15, -36, 12, -39, 12, -39, 6, -42, 6, -42, -3, -39, -3, -39, -9, -36, -9, -36, -12, -33, -12)
+stream = ExtResource("4_ynucw")
+volume_db = -11.097
+pitch_scale = 0.88
 
 [node name="HealthComponet" parent="." instance=ExtResource("4_hbetw")]
-visible = false
 
 [node name="hitbox_component" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_mmd8j")]
-visible = false
 collision_layer = 5
 health_component = NodePath("../HealthComponet")
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="hitbox_component"]
-light_mask = 4
-visibility_layer = 4
-scale = Vector2(1.06981, 1.11761)
-polygon = PackedVector2Array(-33, -15, -12, -15, -12, -12, 6, -12, 6, -15, 24, -15, 24, -12, 27, -12, 27, -9, 30, -9, 30, -6, 33, -6, 33, 9, 30, 9, 30, 12, 27, 12, 27, 15, 24, 15, 24, 18, 6, 18, 6, 15, -15, 15, -15, 18, -33, 18, -33, 15, -36, 15, -36, 12, -39, 12, -39, 6, -42, 6, -42, -3, -39, -3, -39, -9, -36, -9, -36, -12, -33, -12)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_component"]
+shape = SubResource("RectangleShape2D_jlqtu")
 
 [node name="Headlight" type="PointLight2D" parent="."]
-position = Vector2(21, -3)
+position = Vector2(55, -13)
 rotation = -1.61759
 scale = Vector2(0.150534, 0.235329)
 range_z_max = 1
@@ -127,9 +129,16 @@ shadow_enabled = true
 texture = ExtResource("6_mmd8j")
 
 [node name="Headlight2" type="PointLight2D" parent="."]
-position = Vector2(22, 7)
-rotation = -1.46095
+position = Vector2(56, 16)
+rotation = -1.54847
 scale = Vector2(0.150534, 0.235329)
 range_z_max = 1
 shadow_enabled = true
 texture = ExtResource("6_mmd8j")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.3, 0.3)
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_jlqtu")
+volume_db = -1.859

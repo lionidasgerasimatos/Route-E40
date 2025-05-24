@@ -56,7 +56,7 @@ _data = {
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 2
 script = ExtResource("1_w63l4")
 BULLET_SPEED = 20
 
