@@ -1,7 +1,7 @@
 # EnemyCar.gd  —  chase + obstacle avoid + backing-up recovery
 extends CharacterBody2D
 ## -------------------  tunables  -------------------------------------------
-@export var target_path      : NodePath = "../../CAR"
+@export var target_path      : NodePath = "res://Scene/car.tscn"  
 @export var desired_distance : float    = 60
 @export var steering_angle   = 40
 @export var engine_power     = 700
@@ -27,6 +27,7 @@ extends CharacterBody2D
 @onready var ray_l   : RayCast2D = $RayFrontLeft
 @onready var ray_m   : RayCast2D = $RayFrontMid
 @onready var ray_r   : RayCast2D = $RayFrontRight
+@onready var audio   : AudioStreamPlayer2D = $AudioStreamPlayer2D
 ## --------------------------------------------------------------------------
 var acceleration    : Vector2 = Vector2.ZERO
 var steer_direction : float   = 0.0
@@ -41,6 +42,17 @@ func _physics_process(delta: float) -> void:
 	_get_ai_input(delta)
 	calculate_steering(delta)
 	velocity += acceleration * delta
+
+	var speed = velocity.length()
+	var moving = speed > 1.0
+
+	if moving:
+		if not audio.is_playing():
+			audio.play()  # Play engine sound if the car is moving
+	else:
+		if audio.is_playing():
+			audio.stop()  # Stop engine sound if the car is not moving
+
 	apply_friction(delta)
 	move_and_slide()
 
