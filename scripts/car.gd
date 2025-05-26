@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+
+@onready var audio := $AudioStreamPlayer2D
 @onready var car_an :=$CarAnimation
 
 @export var steering_angle = 40  # Maximum angle for steering the car's wheels
@@ -11,26 +13,40 @@ extends CharacterBody2D
 @export var slip_speed = 600  # Speed above which the car's traction decreases (for drifting)
 @export var traction_fast = 4.5  # Traction factor when the car is moving fast (affects control)
 @export var traction_slow = 10  # Traction factor when the car is moving slow (affects control)
+@export var tilemap :TileMap
 
 var wheel_base = 100  # Distance between the front and back axle of the car
 var acceleration = Vector2.ZERO  # Current acceleration vector
 var steer_direction  # Current direction of steering
 
-@export var is_active = true
-
 func _physics_process(delta: float) -> void:
 	
-	if is_active:
-		$Camera2D.enabled = true
-		acceleration = Vector2.ZERO
-		get_input()  # Take input from player
-		calculate_steering(delta)  # Apply turning logic based on steering
-	else:
-		$Camera2D.enabled = false
+	acceleration = Vector2.ZERO
+	get_input()  # Take input from player
+	calculate_steering(delta)  # Apply turning logic based on steering
+
+	var speed = velocity.length()
+	var moving = speed > 1.0   
+	var t = clamp(speed / engine_power, 0.0, 1.0)  # Adjust volume based on speed
+	audio.pitch_scale = lerp(0.8,1.1,t)
 	
-	velocity += acceleration * delta  # Apply the resulting acceleration to the velocity
+	if moving:
+		if not audio.is_playing():
+			audio.play()  # Play engine sound if the car is moving
+	else:
+		if audio.is_playing():
+			audio.stop()  # Stop engine sound if the car is not moving
+
+	velocity += acceleration * delta 
+	if not velocity.is_zero_approx():
+		pass
+
 	apply_friction(delta)  # Apply friction forces to the car
 	move_and_slide()  # Move the car and handle collisions
+	
+	var tile_coords: Vector2i = CoordinatesClass.node_to_tile(tilemap,self)
+	print("Tile Coords: ", tile_coords)  # Debugging output to see the tile coordinates
+
 
 
 func get_input():
@@ -53,7 +69,6 @@ func get_input():
 		car_an.play("Idle")
 
 
-
 func apply_friction(delta):
 	# If there is no input and speed is very low, just stop to prevent endless sliding
 	if acceleration == Vector2.ZERO and velocity.length() < 50:
@@ -63,7 +78,6 @@ func apply_friction(delta):
 	var drag_force = velocity * velocity.length() * drag * delta
 	# Add the forces to the acceleration
 	acceleration += drag_force + friction_force
-
 
 func calculate_steering(delta):
 	# Calculate the positions of the rear and front wheel

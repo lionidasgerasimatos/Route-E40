@@ -5,7 +5,7 @@ var bullet_scene = preload("res://Scene/bullet.tscn")
 @onready var shooting_time:= $shooting_time
 @onready var muzzle_flash:= $barrel_light
 @onready var gun_animation:=$GunAnimation
-
+@onready var audio := $AudioStreamPlayer2D
 
 var light_timer :=0.0
 var light_duration := 0.1  # How long the light should stay visible (in seconds)
@@ -16,8 +16,6 @@ var catch : bool
 func _ready():
 	#print(muzzle_flash) #test
 	pass
-
-
 
 func _physics_process(delta: float) -> void:
 	
@@ -44,13 +42,12 @@ func _physics_process(delta: float) -> void:
 			$shooting_time.start() #begin the Fire Rate 
 			
 		
-		
-		
 			$barrel_light.visible =true
 			light_timer = light_duration 
 			muzzle_flash.energy = 2.0  # Start muzzle flash with strong light
 			muzzle_flash.visible = true #Turn on the flash 
-			
+			audio.pitch_scale = randf_range(0.7,1.1) 
+			audio.play()
 		else:
 			$barrel_light.visible =false 
 		
