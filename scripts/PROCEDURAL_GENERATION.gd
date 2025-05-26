@@ -1,5 +1,6 @@
 extends Node2D
 
+
 # we assign the coordinates of a wall with binary value
 const N = 1
 const E = 2
@@ -61,6 +62,7 @@ func set_walls(cell:Vector2i, mask:int) -> void:
 
 # Begining 
 func _ready() -> void:
+
 	#$Camera2D.position=Map.map_to_local(Vector2(width/2, height/2))
 	
 	var rng:= RandomNumberGenerator.new()
