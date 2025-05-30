@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()  # Move the car and handle collisions
 	
 	var tile_coords: Vector2i = CoordinatesClass.node_to_tile(tilemap,self)
-	print("Tile Coords: ", tile_coords)  # Debugging output to see the tile coordinates
+	#print("Tile Coords: ", tile_coords)  # Debugging output to see the tile coordinates
 
 
 

@@ -1,7 +1,5 @@
-# EnemyCar.gd  —  chase + obstacle avoid + backing-up recovery
 extends CharacterBody2D
-## -------------------  tunables  -------------------------------------------
-@export var target_path      : NodePath = "res://Scene/car.tscn"  
+
 @export var desired_distance : float    = 60
 @export var steering_angle   = 40
 @export var engine_power     = 700
@@ -21,14 +19,13 @@ extends CharacterBody2D
 @export var stuck_delay      : float = 1.0   # sec the car must be stuck before reversing
 @export var reverse_time     : float = 2   # sec spent backing up
 
-## -------------------  cached nodes  ---------------------------------------
-@onready var player  : CharacterBody2D = get_node(target_path)
+@onready var player  : CharacterBody2D = get_tree().get_first_node_in_group("player")
 @onready var car_an  : AnimationPlayer = $AnimationPlayer
 @onready var ray_l   : RayCast2D = $RayFrontLeft
 @onready var ray_m   : RayCast2D = $RayFrontMid
 @onready var ray_r   : RayCast2D = $RayFrontRight
 @onready var audio   : AudioStreamPlayer2D = $AudioStreamPlayer2D
-## --------------------------------------------------------------------------
+
 var acceleration    : Vector2 = Vector2.ZERO
 var steer_direction : float   = 0.0
 
@@ -38,8 +35,9 @@ var reverse_timer   : float = 0.0
 var reversing       : bool  = false
 
 
+
 func _physics_process(delta: float) -> void:
-	_get_ai_input(delta)
+	get_ai_input(delta)
 	calculate_steering(delta)
 	velocity += acceleration * delta
 
@@ -48,19 +46,17 @@ func _physics_process(delta: float) -> void:
 
 	if moving:
 		if not audio.is_playing():
-			audio.play()  # Play engine sound if the car is moving
+			audio.play()  
 	else:
 		if audio.is_playing():
-			audio.stop()  # Stop engine sound if the car is not moving
+			audio.stop() 
 
 	apply_friction(delta)
 	move_and_slide()
 
 
-# ---------------------------------------------------------------------------
-# AI – chase, avoid obstacles, and back up if stuck
-# ---------------------------------------------------------------------------
-func _get_ai_input(delta: float) -> void:
+
+func get_ai_input(delta: float) -> void:
 	# ---------- raycasts ----------
 	ray_l.force_raycast_update()
 	ray_m.force_raycast_update()
@@ -68,7 +64,7 @@ func _get_ai_input(delta: float) -> void:
 
 	# ---------- reversing state ----------
 	if reversing:
-		_reverse_drive(delta)
+		reverse_drive(delta)
 		return   # skip normal chase while backing up
 
 	# ---------- chase steering ----------
@@ -106,18 +102,15 @@ func _get_ai_input(delta: float) -> void:
 	if blocked_ahead and slow_enough:
 		stuck_timer += delta
 		if stuck_timer >= stuck_delay:
-			_start_reverse()
+			start_reverse()
 	else:
 		stuck_timer = 0.0
 
-	# ---------- animations ----------
-	_play_steer_anim()
+	
 
 
-# ---------------------------------------------------------------------------
-# Reverse-drive helper
-# ---------------------------------------------------------------------------
-func _reverse_drive(delta: float) -> void:
+
+func reverse_drive(delta: float) -> void:
 	reverse_timer -= delta
 	if reverse_timer <= 0.0:
 		reversing = false
@@ -132,25 +125,14 @@ func _reverse_drive(delta: float) -> void:
 	if ray_r.is_colliding():  avoid_input -= 1.0
 
 	steer_direction = deg_to_rad(steering_angle) * avoid_input
-	_play_steer_anim()
 
 
-func _start_reverse() -> void:
+
+func start_reverse() -> void:
 	reversing     = true
 	reverse_timer = reverse_time
 	stuck_timer   = 0.0
 
-
-# ---------------------------------------------------------------------------
-# shared helpers
-# ---------------------------------------------------------------------------
-func _play_steer_anim() -> void:
-	if steer_direction > 0.1:
-		car_an.play("right")
-	elif steer_direction < -0.1:
-		car_an.play("left")
-	else:
-		car_an.play("Idle")
 
 
 func apply_friction(delta: float) -> void:
