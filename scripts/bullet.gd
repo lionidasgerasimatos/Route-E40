@@ -1,7 +1,7 @@
 extends Area2D
 
 
-@onready var  _animator := $AnimationPlayer
+@onready var  animator := $AnimationPlayer
 
 @export var attack_damage:= 25
 @export var BULLET_SPEED = 2
@@ -19,6 +19,6 @@ func _on_area_entered(area:Area2D):
 		area.damage(attack)
 		
 	
-	_animator.play("Hit")
+	animator.play("Hit")
 	queue_free()
 	 
