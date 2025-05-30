@@ -9,4 +9,5 @@ func damage(attack: Attack) -> void:
 	if health_component.health <= 0:
 		if get_parent().is_in_group("player"):
 			get_tree().paused =true
-		get_parent().queue_free()
+		else :
+			get_parent().queue_free()
