@@ -1,9 +1,9 @@
 extends Node2D
 class_name  HealthComponent
 
-@export var Max_Health:= 100
+@export var Max_Health: float = 100.0
 
-var health : float
+var health 
 signal health_changed
 
 func _ready() -> void:
@@ -11,4 +11,8 @@ func _ready() -> void:
 	
 func damage(attack: Attack):
 	health -= attack.attack_damage
+	if health > Max_Health:
+		health = Max_Health
+
 	health_changed.emit()
+	print("Health: ", health)
