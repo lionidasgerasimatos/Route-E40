@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv1oj50esc52"]
+
+[ext_resource type="Script" uid="uid://d35r46u1rkuqo" path="res://scripts/rain.gd" id="1_dltyr"]
+
+[node name="Rain" type="Node2D"]
+script = ExtResource("1_dltyr")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 1000
+lifetime = 5.18
+speed_scale = 1.5
+randomness = 0.28
+emission_shape = 3
+emission_rect_extents = Vector2(5100, 1)
+gravity = Vector2(-200, 980)
+scale_amount_max = 1.5
